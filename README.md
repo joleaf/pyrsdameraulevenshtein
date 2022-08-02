@@ -2,7 +2,7 @@
 
 [Damerau-Levenshtein](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance) implementation in Rust as
 Python package.
-You can use this package if you need to calculate a distance metric for list of integers or strings, and you need
+You can use this package if you need to calculate a distance metric for lists of integers or strings, and you need
 high-performance.
 
 This package is based on the [C implementation pyxDamerauLevenshtein](https://github.com/lanl/pyxDamerauLevenshtein).
