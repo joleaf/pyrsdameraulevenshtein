@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "pyrsdameraulevenshtein"
-version = "1.0.0"
+version = "1.0.1"
 description = "Damererau-Levenshtein implementation with Rust for fast performance."
 readme = "README.md"
 authors = [{ name = "Jonas Blatt", email = "jonblatt1992@gmail.com" }]
