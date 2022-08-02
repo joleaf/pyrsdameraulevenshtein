@@ -5,12 +5,14 @@ build-backend = "maturin"
 [project]
 name = "pyrsdameraulevenshtein"
 version = "1.0.0"
-description = "Damererau Levenshtein implementation with Rust."
+description = "Damererau-Levenshtein implementation with Rust for fast performance."
 readme = "README.md"
-authors = [{ name = "Jonas Blatt", email = "jonas@blatts.de" }]
+authors = [{ name = "Jonas Blatt", email = "jonblatt1992@gmail.com" }]
 requires-python = ">=3.9"
-keywords = ["distance", "rust"]
+keywords = ["distance", "rust", "distance", "dameraulevenshtein", "damerau", "levenshtein"]
 classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Topic :: Utilities",
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",

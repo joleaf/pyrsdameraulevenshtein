@@ -1,22 +1,41 @@
-# PyRsDamerauLevenshtein
+# Rust implementation of the Damerau-Levenshtein distance
 
-[Damerau-Levenshtein](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance) Implementation in Rust as
+[Damerau-Levenshtein](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance) implementation in Rust as
 Python package.
+You can use this package if you need to calculate a distance metric for list of integers or strings, and you need
+high-performance.
 
-Based on the [C implementation pyxDamerauLevenshtein](https://github.com/lanl/pyxDamerauLevenshtein).
+This package is based on the [C implementation pyxDamerauLevenshtein](https://github.com/lanl/pyxDamerauLevenshtein).
 
 ## Install
 
 ```shell
 pip install pyrsdameraulevenshtein
 ```
+
 ## Use
+
 ```python
 import pyrsdameraulevenshtein
-distance =  pyrsdameraulevenshtein.distance_int([1,2,3], [1,3])
+
+distance = pyrsdameraulevenshtein.distance_int([1, 2, 3], [1, 3])
 # distance = 1
-distance =  pyrsdameraulevenshtein.distance_unicode("ABC", "AC")
+normalized_distance = pyrsdameraulevenshtein.normalized_distance_int([1, 2, 3], [1, 3])
+# normalized_distance = 0.33
+similarity = pyrsdameraulevenshtein.similarity_int([1, 2, 3], [1, 3])
+# similarity = 0.66
+distance = pyrsdameraulevenshtein.distance_str(["A", "B", "C"], ["A", "C"])
 # distance = 1
+normalized_distance = pyrsdameraulevenshtein.normalized_distance_str(["A", "B", "C"], ["A", "C"])
+# normalized_distance = 0.33
+similarity = pyrsdameraulevenshtein.similarity_str(["A", "B", "C"], ["A", "C"])
+# similarity = 0.66
+distance = pyrsdameraulevenshtein.distance_unicode("ABC", "AC")
+# distance = 1
+normalized_distance = pyrsdameraulevenshtein.normalized_distance_unicode("ABC", "AC")
+# normalized_distance = 0.33
+similarity = pyrsdameraulevenshtein.similarity_unicode("ABC", "AC")
+# similarity = 0.66
 ```
 
 ## Get started
@@ -30,7 +49,8 @@ distance =  pyrsdameraulevenshtein.distance_unicode("ABC", "AC")
 
 ## Performance
 
-Speed comparison with the [C implementation pyxDamerauLevenshtein](https://github.com/lanl/pyxDamerauLevenshtein) results in 4 times faster performance.
+Speed comparison with the [C implementation pyxDamerauLevenshtein](https://github.com/lanl/pyxDamerauLevenshtein)
+results in 4 times faster performance.
 
 ```python
 import random
