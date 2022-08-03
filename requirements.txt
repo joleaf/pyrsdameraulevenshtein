@@ -1,3 +1,5 @@
 maturin==0.13.1
-pyxDamerauLevenshtein==1.7.0
-tomli==2.0.1
+pyxDamerauLevenshtein==1.7.1
+fastDamerauLevenshtein==1.0.7
+textdistance==4.3.0
+jellyfish==0.9.0

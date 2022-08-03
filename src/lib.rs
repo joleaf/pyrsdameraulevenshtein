@@ -291,7 +291,7 @@ fn similarity_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> PyResult<
 }
 
 
-/// Damerau-Levenshtein distance implementation in rust for high performance.
+/// Damerau-Levenshtein distance implementation in rust for high-performance.
 #[pymodule]
 fn pyrsdameraulevenshtein(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(distance_int, m)?)?;
