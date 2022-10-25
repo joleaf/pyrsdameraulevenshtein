@@ -4,7 +4,7 @@ import unittest
 
 import jellyfish
 import textdistance
-from fastDamerauLevenshtein import damerauLevenshtein
+#from fastDamerauLevenshtein import damerauLevenshtein
 from pyxdameraulevenshtein import damerau_levenshtein_distance, normalized_damerau_levenshtein_distance
 import pyrsdameraulevenshtein
 
@@ -58,11 +58,11 @@ class DamerauLevenshteinTest(unittest.TestCase):
             result = damerau_levenshtein_distance(a, b)
         toc = time.perf_counter()
         print(f"{toc - tic:0.4f} seconds, pyxdameraulevenshtein")
-        tic = time.perf_counter()
-        for a, b in zip(a_lists, b_lists):
-            result = damerauLevenshtein(a, b, similarity=False)
-        toc = time.perf_counter()
-        print(f"{toc - tic:0.4f} seconds, fastDamerauLevenshtein")
+        #tic = time.perf_counter()
+        #for a, b in zip(a_lists, b_lists):
+        #    result = damerauLevenshtein(a, b, similarity=False)
+        #toc = time.perf_counter()
+        #print(f"{toc - tic:0.4f} seconds, fastDamerauLevenshtein")
 
     def test_string_performance_against_other_implementations(self):
         n = 100000
@@ -85,11 +85,11 @@ class DamerauLevenshteinTest(unittest.TestCase):
             result = damerau_levenshtein_distance(a, b)
         toc = time.perf_counter()
         print(f"{toc - tic:0.4f} seconds, pyxdameraulevenshtein")
-        tic = time.perf_counter()
-        for a, b in zip(a_strings, b_strings):
-            result = damerauLevenshtein(a, b, similarity=False)
-        toc = time.perf_counter()
-        print(f"{toc - tic:0.4f} seconds, fastDamerauLevenshtein")
+        #tic = time.perf_counter()
+        #for a, b in zip(a_strings, b_strings):
+        #    result = damerauLevenshtein(a, b, similarity=False)
+        #toc = time.perf_counter()
+        #print(f"{toc - tic:0.4f} seconds, fastDamerauLevenshtein")
         tic = time.perf_counter()
         for a, b in zip(a_strings, b_strings):
             result = jellyfish.damerau_levenshtein_distance(a, b)

@@ -17,7 +17,7 @@ use pyo3::types::{PyList, PyUnicode};
 /// let seq2 = vec![2, 1, 3, 4];
 /// assert_eq!(1, distance_native(&seq1, &seq2))
 /// ```
-fn distance_native<'a, T: PartialEq>(seq1: &'a Vec<T>, seq2: &'a Vec<T>) -> usize {
+pub fn distance_native<'a, T: PartialEq>(seq1: &'a Vec<T>, seq2: &'a Vec<T>) -> usize {
     // Swap if len(seq1) < len(seq2)
     let mut seq1 = seq1;
     let mut seq2 = seq2;

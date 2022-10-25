@@ -16,25 +16,25 @@ pip install pyrsdameraulevenshtein
 ## Use
 
 ```python
-import pyrsdameraulevenshtein
+import pyrsdameraulevenshtein as dl
 
-distance = pyrsdameraulevenshtein.distance_int([1, 2, 3], [1, 3])
+distance = dl.distance_int([1, 2, 3], [1, 3])
 # distance = 1
-normalized_distance = pyrsdameraulevenshtein.normalized_distance_int([1, 2, 3], [1, 3])
+normalized_distance = dl.normalized_distance_int([1, 2, 3], [1, 3])
 # normalized_distance = 0.33
-similarity = pyrsdameraulevenshtein.similarity_int([1, 2, 3], [1, 3])
+similarity = dl.similarity_int([1, 2, 3], [1, 3])
 # similarity = 0.66
-distance = pyrsdameraulevenshtein.distance_str(["A", "B", "C"], ["A", "C"])
+distance = dl.distance_str(["A", "B", "C"], ["A", "C"])
 # distance = 1
-normalized_distance = pyrsdameraulevenshtein.normalized_distance_str(["A", "B", "C"], ["A", "C"])
+normalized_distance = dl.normalized_distance_str(["A", "B", "C"], ["A", "C"])
 # normalized_distance = 0.33
-similarity = pyrsdameraulevenshtein.similarity_str(["A", "B", "C"], ["A", "C"])
+similarity = dl.similarity_str(["A", "B", "C"], ["A", "C"])
 # similarity = 0.66
-distance = pyrsdameraulevenshtein.distance_unicode("ABC", "AC")
+distance = dl.distance_unicode("ABC", "AC")
 # distance = 1
-normalized_distance = pyrsdameraulevenshtein.normalized_distance_unicode("ABC", "AC")
+normalized_distance = dl.normalized_distance_unicode("ABC", "AC")
 # normalized_distance = 0.33
-similarity = pyrsdameraulevenshtein.similarity_unicode("ABC", "AC")
+similarity = dl.similarity_unicode("ABC", "AC")
 # similarity = 0.66
 ```
 
@@ -49,7 +49,8 @@ similarity = pyrsdameraulevenshtein.similarity_unicode("ABC", "AC")
 
 ## Performance
 
-Tests are executed on a Mac Mini with M1 chip.
+Tests are executed on a Mac Mini with M1 chip with Python 3.10.
+Redo these tests in [tests/DamerauLevenshteinTest.py](tests/DamerauLevenshteinTest.py).
 
 #### List comparisons
 
