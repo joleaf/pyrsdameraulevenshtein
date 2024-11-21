@@ -1,18 +1,15 @@
-[build-system]
-requires = ["maturin>=1.3,<2.0"]
-build-backend = "maturin"
-
 [project]
 name = "pyrsdameraulevenshtein"
 version = "1.1.0"
 description = "Damererau-Levenshtein implementation with Rust for high-performance."
 readme = "README.md"
-authors = [{ name = "Jonas Blatt", email = "jonblatt1992@gmail.com" }]
+authors = [
+    { name = "Jonas Blatt", email = "jonas@blatts.de" }
+]
 requires-python = ">=3.11"
 license = { text = "GPL-3.0-or-later" }
 keywords = ["distance", "rust", "distance", "dameraulevenshtein", "damerau", "levenshtein"]
-homepage = "https://github.com/joleaf/pyrsdameraulevenshtein"
-repository = "https://github.com/joleaf/pyrsdameraulevenshtein"
+
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Topic :: Utilities",
@@ -25,3 +22,10 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 
+[project.urls]
+homepage = "https://github.com/joleaf/pyrsdameraulevenshtein"
+repository = "https://github.com/joleaf/pyrsdameraulevenshtein"
+
+[build-system]
+requires = ["maturin>=1.3,<2.0"]
+build-backend = "maturin"
