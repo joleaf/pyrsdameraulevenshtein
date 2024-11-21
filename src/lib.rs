@@ -1,6 +1,6 @@
-use std::cmp::{max, min};
 use pyo3::prelude::*;
-use pyo3::types::{PyList, PyUnicode};
+use pyo3::types::{PyList, PyString};
+use std::cmp::{max, min};
 
 /// Calculates the Damerau-Levenshtein distance between two lists of PartialEq elements.
 ///
@@ -28,7 +28,8 @@ pub fn distance_native<'a, T: PartialEq>(seq1: &'a Vec<T>, seq2: &'a Vec<T>) -> 
     let mut first_differing_index = 0;
     while first_differing_index < seq1.len()
         && first_differing_index < seq2.len()
-        && seq1[first_differing_index] == seq2[first_differing_index] {
+        && seq1[first_differing_index] == seq2[first_differing_index]
+    {
         first_differing_index += 1;
     }
     let seq1 = &seq1[first_differing_index..seq1.len()];
@@ -85,16 +86,20 @@ pub fn distance_native<'a, T: PartialEq>(seq1: &'a Vec<T>, seq2: &'a Vec<T>) -> 
                 }
             }
             storage[this_row * offset + j] = min(min(delete_cost, add_cost), subtract_cost);
-            if i > 0 && j > 0
+            if i > 0
+                && j > 0
                 && seq1[i] == seq2[j - 1]
                 && seq1[i - 1] == seq2[j]
-                && seq1[i] != seq2[j] {
+                && seq1[i] != seq2[j]
+            {
                 if j > 1 {
-                    storage[this_row * offset + j] = min(storage[this_row * offset + j],
-                                                         storage[two_ago * offset + j - 2] + 1)
+                    storage[this_row * offset + j] = min(
+                        storage[this_row * offset + j],
+                        storage[two_ago * offset + j - 2] + 1,
+                    )
                 } else {
-                    storage[this_row * offset + j] = min(storage[this_row * offset + j],
-                                                         storage[seq2.len()] + 1)
+                    storage[this_row * offset + j] =
+                        min(storage[this_row * offset + j], storage[seq2.len()] + 1)
                 }
             }
         }
@@ -170,9 +175,9 @@ mod tests {
 /// distance_int([1,2,3],[2,3])
 /// -> 1
 #[pyfunction]
-fn distance_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<usize> {
-    let seq1: Vec<i32> = seq1.extract().unwrap();
-    let seq2: Vec<i32> = seq2.extract().unwrap();
+fn distance_int<'a>(seq1: &Bound<'_, PyList>, seq2: &Bound<'_, PyList>) -> PyResult<usize> {
+    let seq1: Vec<i32> = seq1.extract()?;
+    let seq2: Vec<i32> = seq2.extract()?;
     Ok(distance_native(&seq1, &seq2))
 }
 
@@ -185,9 +190,12 @@ fn distance_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<usize> {
 /// normalized_distance_int([1,2,3],[2,3])
 /// -> 0.33
 #[pyfunction]
-fn normalized_distance_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
+fn normalized_distance_int<'a>(
+    seq1: &Bound<'_, PyList>,
+    seq2: &Bound<'_, PyList>,
+) -> PyResult<f64> {
     let _n = max(seq1.len(), seq2.len());
-    Ok(distance_int(&seq1, &seq2).unwrap() as f64 / max(_n, 1) as f64)
+    Ok(distance_int(&seq1, &seq2)? as f64 / max(_n, 1) as f64)
 }
 
 /// similarity_int(seq1, seq2, /)
@@ -200,8 +208,8 @@ fn normalized_distance_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f
 /// -> 0.66
 ///
 #[pyfunction]
-fn similarity_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
-    Ok(1.0 as f64 - normalized_distance_int(&seq1, &seq2).unwrap())
+fn similarity_int<'a>(seq1: &Bound<'_, PyList>, seq2: &Bound<'_, PyList>) -> PyResult<f64> {
+    Ok(1.0f64 - normalized_distance_int(&seq1, &seq2).unwrap())
 }
 
 /// distance_str(seq1, seq2, /)
@@ -213,9 +221,9 @@ fn similarity_int<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
 /// distance_str(["A","B","C"],["A","C"])
 /// -> 1
 #[pyfunction]
-fn distance_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<usize> {
-    let seq1: Vec<&str> = seq1.extract().unwrap();
-    let seq2: Vec<&str> = seq2.extract().unwrap();
+fn distance_str<'a>(seq1: &Bound<'_, PyList>, seq2: &Bound<'_, PyList>) -> PyResult<usize> {
+    let seq1: Vec<String> = seq1.extract()?;
+    let seq2: Vec<String> = seq2.extract()?;
     Ok(distance_native(&seq1, &seq2))
 }
 
@@ -228,9 +236,12 @@ fn distance_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<usize> {
 /// normalized_distance_str(["A","B","C"],["A","C"])
 /// -> 0.33
 #[pyfunction]
-fn normalized_distance_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
+fn normalized_distance_str<'a>(
+    seq1: &Bound<'_, PyList>,
+    seq2: &Bound<'_, PyList>,
+) -> PyResult<f64> {
     let _n = max(seq1.len(), seq2.len());
-    Ok(distance_str(&seq1, &seq2).unwrap() as f64 / max(_n, 1) as f64)
+    Ok(distance_str(&seq1, &seq2)? as f64 / max(_n, 1) as f64)
 }
 
 /// similarity_str(seq1, seq2, /)
@@ -243,8 +254,8 @@ fn normalized_distance_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f
 /// -> 0.66
 ///
 #[pyfunction]
-fn similarity_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
-    Ok(1.0 as f64 - normalized_distance_str(&seq1, &seq2).unwrap())
+fn similarity_str<'a>(seq1: &Bound<'_, PyList>, seq2: &Bound<'_, PyList>) -> PyResult<f64> {
+    Ok(1.0 as f64 - normalized_distance_str(&seq1, &seq2)?)
 }
 
 /// distance_unicode(seq1, seq2, /)
@@ -256,7 +267,7 @@ fn similarity_str<'a>(seq1: &'a PyList, seq2: &'a PyList) -> PyResult<f64> {
 /// distance_unicode("ABC","AC")
 /// -> 1
 #[pyfunction]
-fn distance_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> PyResult<usize> {
+fn distance_unicode<'a>(seq1: &Bound<'_, PyString>, seq2: &Bound<'_, PyString>) -> PyResult<usize> {
     let seq1: Vec<char> = seq1.to_string().chars().collect();
     let seq2: Vec<char> = seq2.to_string().chars().collect();
     Ok(distance_native(&seq1, &seq2))
@@ -271,9 +282,12 @@ fn distance_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> PyResult<us
 /// normalized_distance_unicode("ABC","AC")
 /// -> 0.33
 #[pyfunction]
-fn normalized_distance_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> PyResult<f64> {
-    let _n = max(seq1.len().unwrap(), seq2.len().unwrap());
-    Ok(distance_unicode(&seq1, &seq2).unwrap() as f64 / max(_n, 1) as f64)
+fn normalized_distance_unicode<'a>(
+    seq1: &Bound<'_, PyString>,
+    seq2: &Bound<'_, PyString>,
+) -> PyResult<f64> {
+    let _n = max(seq1.len()?, seq2.len()?);
+    Ok(distance_unicode(&seq1, &seq2)? as f64 / max(_n, 1) as f64)
 }
 
 /// similarity_unicode(seq1, seq2, /)
@@ -286,14 +300,13 @@ fn normalized_distance_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> 
 /// -> 0.66
 ///
 #[pyfunction]
-fn similarity_unicode<'a>(seq1: &'a PyUnicode, seq2: &'a PyUnicode) -> PyResult<f64> {
-    Ok(1.0 as f64 - normalized_distance_unicode(&seq1, &seq2).unwrap())
+fn similarity_unicode(seq1: &Bound<'_, PyString>, seq2: &Bound<'_, PyString>) -> PyResult<f64> {
+    Ok(1.0 as f64 - normalized_distance_unicode(&seq1, &seq2)?)
 }
-
 
 /// Damerau-Levenshtein distance implementation in rust for high-performance.
 #[pymodule]
-fn pyrsdameraulevenshtein(_py: Python, m: &PyModule) -> PyResult<()> {
+fn pyrsdameraulevenshtein(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(distance_int, m)?)?;
     m.add_function(wrap_pyfunction!(normalized_distance_int, m)?)?;
     m.add_function(wrap_pyfunction!(similarity_int, m)?)?;
