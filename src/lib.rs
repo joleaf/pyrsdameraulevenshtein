@@ -209,7 +209,7 @@ fn normalized_distance_int<'a>(
 ///
 #[pyfunction]
 fn similarity_int<'a>(seq1: &Bound<'_, PyList>, seq2: &Bound<'_, PyList>) -> PyResult<f64> {
-    Ok(1.0f64 - normalized_distance_int(&seq1, &seq2).unwrap())
+    Ok(1.0f64 - normalized_distance_int(&seq1, &seq2)?)
 }
 
 /// distance_str(seq1, seq2, /)

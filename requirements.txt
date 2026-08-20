@@ -1,5 +1,5 @@
-maturin==1.10.1
-pyxDamerauLevenshtein==1.7.1
+maturin==1.14.1
+pyxDamerauLevenshtein==1.10.0
 #fastDamerauLevenshtein==1.0.7
-textdistance==4.5.0
-jellyfish==0.9.0
+textdistance==4.6.3
+jellyfish==1.2.1

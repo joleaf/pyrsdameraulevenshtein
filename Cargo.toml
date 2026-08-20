@@ -1,7 +1,12 @@
 [package]
 name = "pyrsdameraulevenshtein"
-version = "1.2.0"
-edition = "2021"
+version = "1.3.0"
+edition = "2024"
+description = "Damerau-Levenshtein implementation in Rust for high-performance."
+authors = ["Jonas Blatt <jonas@blatts.de>"]
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/joleaf/pyrsdameraulevenshtein"
+repository = "https://github.com/joleaf/pyrsdameraulevenshtein"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
@@ -9,4 +14,4 @@ name = "pyrsdameraulevenshtein"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.27.1", features = ["extension-module"] }
+pyo3 = { version = "0.29.2", features = ["extension-module"] }
